@@ -1,0 +1,81 @@
+root@u-45755:/home/user/Docker/task5# docker run -d --name rbm-dkr-05-run-$(cat /dev/urandom | tr -cd 'a-f0-9' | head -c 10) nginx:stable
+243b6d25bcce81b67263abadbca76b8cc4f8c4709beaec16d9885baa239bd165
+
+root@u-45755:/home/user/Docker/task5# docker run -d --name rbm-dkr-05-run-$(cat /dev/urandom | tr -cd 'a-f0-9' | head -c 10) nginx:stable
+74bedc85959e4b8e557357256418adf9b250a8efb94b8cdfac5451eddb27a700
+
+
+root@u-45755:/home/user/Docker/task5# docker ps 
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS     NAMES
+74bedc85959e   nginx:stable   "/docker-entrypoint.…"   2 seconds ago    Up 2 seconds    80/tcp    rbm-dkr-05-run-95297faada
+243b6d25bcce   nginx:stable   "/docker-entrypoint.…"   32 seconds ago   Up 32 seconds   80/tcp    rbm-dkr-05-run-6f8f2a600d
+
+root@u-45755:/home/user/Docker/task5# docker run -d --name rbm-dkr-05-stop nginx:stable
+6f55bd1f7e61d7e09b629397fb7b3cae3d281e63ac1de9872d473d80ad640aed
+
+root@u-45755:/home/user/Docker/task5# docker ps 
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+6f55bd1f7e61   nginx:stable   "/docker-entrypoint.…"   3 seconds ago        Up 2 seconds        80/tcp    rbm-dkr-05-stop
+74bedc85959e   nginx:stable   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    rbm-dkr-05-run-95297faada
+243b6d25bcce   nginx:stable   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    rbm-dkr-05-run-6f8f2a600d
+
+root@u-45755:/home/user/Docker/task5# docker ps > /home/user/Docker/task5/ps.txt
+
+root@u-45755:/home/user/Docker/task5# ls -lah
+total 12K
+drwxr-xr-x 2 root root 4,0K янв 31 19:09 .
+drwxr-xr-x 6 root root 4,0K янв 31 19:06 ..
+-rw-r--r-- 1 root root  504 янв 31 19:09 ps.txt
+
+root@u-45755:/home/user/Docker/task5# docker stop rbm-dkr-05-stop
+rbm-dkr-05-stop
+
+root@u-45755:/home/user/Docker/task5# docker ps 
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS     NAMES
+74bedc85959e   nginx:stable   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   80/tcp    rbm-dkr-05-run-95297faada
+243b6d25bcce   nginx:stable   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   80/tcp    rbm-dkr-05-run-6f8f2a600d
+
+root@u-45755:/home/user/Docker/task5# docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                     PORTS     NAMES
+6f55bd1f7e61   nginx:stable   "/docker-entrypoint.…"   About a minute ago   Exited (0) 8 seconds ago             rbm-dkr-05-stop
+74bedc85959e   nginx:stable   "/docker-entrypoint.…"   2 minutes ago        Up 2 minutes               80/tcp    rbm-dkr-05-run-95297faada
+243b6d25bcce   nginx:stable   "/docker-entrypoint.…"   2 minutes ago        Up 2 minutes               80/tcp    rbm-dkr-05-run-6f8f2a600d
+77b53ee7115a   nginx:stable   "/docker-entrypoint.…"   34 minutes ago       Exited (0) 2 minutes ago             rbm-dkr-04
+7f1ccca4c1b8   nginx:stable   "/docker-entrypoint.…"   3 hours ago          Exited (0) 3 hours ago               rbm-dkr-03
+95693288741b   nginx:stable   "/docker-entrypoint.…"   4 hours ago          Exited (0) 3 hours ago               rbm-dkr-02
+e2a34972563e   nginx:stable   "/docker-entrypoint.…"   5 hours ago          Exited (0) 5 hours ago               rbm-dkr-01
+9bb716590846   hello-world    "/hello"                 5 hours ago          Exited (0) 5 hours ago               suspicious_aryabhata
+
+root@u-45755:/home/user/Docker/task5# docker stop $(docker ps -aq)
+6f55bd1f7e61
+74bedc85959e
+243b6d25bcce
+77b53ee7115a
+7f1ccca4c1b8
+95693288741b
+e2a34972563e
+9bb716590846
+
+root@u-45755:/home/user/Docker/task5# docker ps -a 
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                      PORTS     NAMES
+6f55bd1f7e61   nginx:stable   "/docker-entrypoint.…"   About a minute ago   Exited (0) 35 seconds ago             rbm-dkr-05-stop
+74bedc85959e   nginx:stable   "/docker-entrypoint.…"   2 minutes ago        Exited (0) 3 seconds ago              rbm-dkr-05-run-95297faada
+243b6d25bcce   nginx:stable   "/docker-entrypoint.…"   3 minutes ago        Exited (0) 3 seconds ago              rbm-dkr-05-run-6f8f2a600d
+77b53ee7115a   nginx:stable   "/docker-entrypoint.…"   34 minutes ago       Exited (0) 2 minutes ago              rbm-dkr-04
+7f1ccca4c1b8   nginx:stable   "/docker-entrypoint.…"   3 hours ago          Exited (0) 3 hours ago                rbm-dkr-03
+95693288741b   nginx:stable   "/docker-entrypoint.…"   4 hours ago          Exited (0) 3 hours ago                rbm-dkr-02
+e2a34972563e   nginx:stable   "/docker-entrypoint.…"   5 hours ago          Exited (0) 5 hours ago                rbm-dkr-01
+9bb716590846   hello-world    "/hello"                 5 hours ago          Exited (0) 5 hours ago                suspicious_aryabhata
+
+root@u-45755:/home/user/Docker/task5# docker rm $(docker ps -aq)
+6f55bd1f7e61
+74bedc85959e
+243b6d25bcce
+77b53ee7115a
+7f1ccca4c1b8
+95693288741b
+e2a34972563e
+9bb716590846
+
+root@u-45755:/home/user/Docker/task5# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
